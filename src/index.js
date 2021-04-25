@@ -1,11 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reportWebVitals from './reportWebVitals';
+
+import App from './components/App';
+import reducers from './reducers';
+
+//This is for Redux devtools -> https://github.com/zalmoxisus/redux-devtools-extension#installation
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware())
+)
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
